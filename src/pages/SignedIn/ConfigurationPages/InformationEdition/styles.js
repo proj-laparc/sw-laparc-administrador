@@ -168,7 +168,7 @@ export const ButtonsContainer = styled.div`
   flex: row;
   display: flex;
   justify-content: center;
-  align-self: center;
+  align-self: flex-start;
   @media(max-width: 800px){
     flex-direction: column-reverse;
   }
@@ -177,7 +177,7 @@ export const ButtonsContainer = styled.div`
 export const EditButton = styled.button`
   width: 160px;
   height: 42px;
-  margin: 0 20px 0 0;
+  margin: 0 0 0 15px;
   background: var(--primary);
   box-shadow: 0px 4px 10px rgba(16, 156, 241, 0.24);
   border-radius: 4px;
