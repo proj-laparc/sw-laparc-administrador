@@ -156,7 +156,7 @@ export default function EditScientificPubs() {
           headers: {
             'x-amz-acl': 'public-read',
             'Content-Type': filePart.type,
-            'Content-Disposition': 'attachment',
+            'Content-Disposition': 'inline',
           },
         },
       );

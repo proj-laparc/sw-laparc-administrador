@@ -132,7 +132,7 @@ export default function AddScientificPubs() {
           headers: {
             'x-amz-acl': 'public-read',
             'Content-Type': filePart.type,
-            'Content-Disposition': 'attachment',
+            'Content-Disposition': 'inline',
           },
         },
       );
