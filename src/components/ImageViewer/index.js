@@ -38,7 +38,7 @@ export default function ImageViewer({ data, route }) {
           }}
         >
           <img
-            src={`https://storage-laparc.nyc3.digitaloceanspaces.com${data.file_name}`}
+            src={`https://storage-laparc.nyc3.digitaloceanspaces.com/laparc/${data.file_name}`}
             alt="new"
             
             key={data.id.toString()}
