@@ -124,7 +124,7 @@ export default function ViewPatient() {
                 {data.formulario ? (
                   <UploadedFile form={true}>
                     <a
-                      href={`https://storage-fluxo.nyc3.digitaloceanspaces.com/laparc/${data.formulario.file_name}`}
+                      href={`https://storage-laparc.nyc3.digitaloceanspaces.com${data.formulario.file_name}`}
                       target="_blank"
                     >
                       <img src={icons.pdf} />
@@ -146,7 +146,7 @@ export default function ViewPatient() {
                     >
                       <UploadedFile>
                         <a
-                          href={`https://storage-fluxo.nyc3.digitaloceanspaces.com/laparc/${laudo.file_name}`}
+                          href={`https://storage-laparc.nyc3.digitaloceanspaces.com${laudo.file_name}`}
                           target="_blank"
                         >
                           <img src={icons.pdf} />

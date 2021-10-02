@@ -36,7 +36,7 @@ export default function Regitser() {
         nome: firstName,
         sobrenome: lastName,
         email,
-        link: 'https://laparc.netlify.app/redefinir-senha/active/',
+        link: 'https://admin.laparc.com.br/redefinir-senha/active/',
       };
       const response = await api.post('/admins/cadastrar', data);
       addToast({

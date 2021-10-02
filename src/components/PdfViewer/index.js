@@ -85,7 +85,7 @@ export default function PdfViewer({ data, route }) {
               onLoadSuccess={onDocumentLoadSuccess}
               
               file={{
-                url: `https://storage-fluxo.nyc3.digitaloceanspaces.com/laparc/${data.file_name}`,
+                url: `https://storage-laparc.nyc3.digitaloceanspaces.com${data.file_name}`,
               }}
             >
               <StyledPage

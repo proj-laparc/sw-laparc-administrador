@@ -359,7 +359,7 @@ export default function EditPatient({
             ? null
             : formatForm(form[0]),
         consultas: filterEmptyAppointments(consultas),
-        link: 'https://laparc-paciente.netlify.app/redefinir-senha/active/',
+        link: 'https://laparc.com.br/redefinir-senha/active/',
       };
       const response = await api.patch(`/pacientes/${id}`, data);
       addToast({

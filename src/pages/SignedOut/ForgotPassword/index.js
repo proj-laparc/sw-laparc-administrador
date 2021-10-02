@@ -29,7 +29,7 @@ export default function Register() {
     try {
       const data = {
         email,
-        link: 'https://laparc.netlify.app/redefinir-senha/forgot/',
+        link: 'https://admin.laparc.com.br/redefinir-senha/forgot/',
       };
       const response = await api.post('/admins/esqueci-minha-senha', data);
       addToast({

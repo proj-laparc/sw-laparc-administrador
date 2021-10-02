@@ -50,7 +50,7 @@ export default function AudioPlayer({ data, route }) {
             key={data.id.toString()}
             width={"90%"}
             height={50}
-            url={`https://storage-fluxo.nyc3.digitaloceanspaces.com/laparc/${data.file_name}`}
+            url={`https://storage-laparc.nyc3.digitaloceanspaces.com${data.file_name}`}
           />
         </div>
       </ContentContainer>
@@ -66,7 +66,7 @@ export default function AudioPlayer({ data, route }) {
           <IconButton>{icons.edit}</IconButton>
         </Link>
         <a
-          href={`https://storage-fluxo.nyc3.digitaloceanspaces.com/laparc/${data.file_name}`}
+          href={`https://storage-laparc.nyc3.digitaloceanspaces.com${data.file_name}`}
           target="_blank"
           style={{ display: 'inline-block' }}
         >

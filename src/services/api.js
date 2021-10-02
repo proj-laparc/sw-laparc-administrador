@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://laparc.herokuapp.com/',
+  baseURL: 'https://api.laparc.com.br/',
 });
 
 api.interceptors.request.use(async config => {
@@ -22,7 +22,7 @@ api.interceptors.response.use(
       const refreshToken = localStorage.getItem('@Laparc:refreshToken');
       try {
         const apiRefresh = axios.create({
-          baseURL: 'https://laparc.herokuapp.com/',
+          baseURL: 'https://api.laparc.com.br/',
         });
         const response = await apiRefresh.get('/refresh-token', {
           headers: { Authorization: `Bearer ${refreshToken}` },
