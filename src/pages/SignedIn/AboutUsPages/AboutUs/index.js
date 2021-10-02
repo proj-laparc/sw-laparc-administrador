@@ -170,8 +170,8 @@ export default function AboutUs() {
               <h3>{data[language]}</h3>
             </Description>
             <div style={{marginTop: 20}}>
-              <PicturesContainer length={data.fotos.slice(0,2).length}>
-              {data.fotos.slice(0,2).map((foto) => (
+              <PicturesContainer length={data.fotos?.slice(0,2).length}>
+              {data.fotos?.slice(0,2).map((foto) => (
                 <Picture
                   src={
                     foto.preview

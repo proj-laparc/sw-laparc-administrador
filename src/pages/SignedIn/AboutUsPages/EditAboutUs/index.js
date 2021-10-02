@@ -41,10 +41,10 @@ export default function EditAboutUs({
   const [loading, setLoading] = useState(false);
   const [descriptions, setDescriptions] = useState(initialDescriptions);
   const [firstPicture, setFirstPicture] = useState(
-    fotos[0] ? fotos[0] : null,
+    fotos && fotos[0] ? fotos[0] : null,
   );
   const [secondPicture, setSecondPicture] = useState(
-    fotos[1] ? fotos[1] : null,
+    fotos && fotos[1] ? fotos[1] : null,
   );
   const [open, setOpen] = useState(false)
 
