@@ -166,7 +166,7 @@ export default function EditOurStory({
         ingles: descriptions.ingles,
         fotos: newPictures
       };
-      const response = await api.patch('/textos/5', data);
+      const response = await api.patch('/textos/1', data);
       const newData = {
         portugues: response.data.portugues,
         espanhol: response.data.espanhol,

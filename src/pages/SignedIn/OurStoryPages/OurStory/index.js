@@ -36,7 +36,7 @@ export default function OurStory() {
   async function loadOurStory() {
     setLoading(true);
     try {
-      const response = await api.get('/textos/5');
+      const response = await api.get('/textos/1');
       const { data } = response;
       setData(data);
     } catch (err) {

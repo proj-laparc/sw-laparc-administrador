@@ -140,7 +140,7 @@ export default function EditAboutUs({
         ingles: descriptions.ingles,
         fotos: newPictures
       };
-      const response = await api.patch('/textos/7', data);
+      const response = await api.patch('/textos/2', data);
       const newData = {
         portugues: response.data.portugues,
         espanhol: response.data.espanhol,

@@ -73,7 +73,7 @@ export default function AboutUs() {
   async function loadAboutUs() {
     setLoading(true);
     try {
-      const response = await api.get('/textos/7');
+      const response = await api.get('/textos/2');
       const { data } = response;
       setData(data);
     } catch (err) {
