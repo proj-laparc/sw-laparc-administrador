@@ -59,7 +59,6 @@ export const ViewButton = styled.button`
   margin-left: 20px;
   text-decoration: none;
   @media(max-width: 800px){
-    width: 20%;
     margin-right: 10px;
   }
 
@@ -78,5 +77,7 @@ export const ViewButton = styled.button`
 export const Group = styled.div`
   display: flex;
   justify-content: space-between;
-  width: calc(100%/12*3);
+  @media(min-width:800px){
+    width: calc(100%/12*3);
+  }
 `
