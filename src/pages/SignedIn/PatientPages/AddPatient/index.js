@@ -29,6 +29,7 @@ import {
   UploadedFile,
   ActionsContainer,
   StyledSelect,
+  InputGroup
 } from './styles';
 import { icons, animations } from '../../../../assets';
 import api from '../../../../services/api';
@@ -159,14 +160,14 @@ export default function AddPatient() {
       const fileData =
         type === 'laudo'
           ? {
-              file_name: firstResponse.data.file_name,
-              descricao: file.descricao,
-              type: 'laudo',
-            }
+            file_name: firstResponse.data.file_name,
+            descricao: file.descricao,
+            type: 'laudo',
+          }
           : {
-              file_name: firstResponse.data.file_name,
-              descricao: 'descricao',
-            };
+            file_name: firstResponse.data.file_name,
+            descricao: 'descricao',
+          };
       /*para transformar o arquivo "file" do input em um arquivo
       binário (formato configurado no backend) é preciso fazer um 
       parse no arquivo, isto é, transformar em um Blob que contém
@@ -228,10 +229,11 @@ export default function AddPatient() {
         telefone: patientData.phoneNumber ? patientData.phoneNumber : null,
         laudos: laudos.length === 0 ? [] : laudos,
         formulario: form.length === 0 ? null : form[0],
+        projeto:patientData.project ?? null,
         consultas: filterEmptyAppointments(consultas),
         link: 'https://laparc.com.br/redefinir-senha/active/',
       };
-      const response = await api.post('/pacientes/cadastrar', data);
+      await api.post('/pacientes/cadastrar', data);
       addToast({
         type: 'info',
         title: 'Paciente adicionado com sucesso!',
@@ -331,9 +333,9 @@ export default function AddPatient() {
         results.forEach(file =>
           file?.type === 'laudo'
             ? laudos.push({
-                file_name: file.file_name,
-                descricao: file.descricao,
-              })
+              file_name: file.file_name,
+              descricao: file.descricao,
+            })
             : form.push(file),
         );
         sendPatientData(laudos, form);
@@ -444,17 +446,17 @@ export default function AddPatient() {
         backgroundColor: isDisabled
           ? null
           : isSelected
-          ? data.color
-          : isFocused
-          ? color.alpha(0.1).css()
-          : null,
+            ? data.color
+            : isFocused
+              ? color.alpha(0.1).css()
+              : null,
         color: isDisabled
           ? '#ccc'
           : isSelected
-          ? chroma.contrast(color, 'white') > 2
-            ? 'white'
-            : 'black'
-          : data.color,
+            ? chroma.contrast(color, 'white') > 2
+              ? 'white'
+              : 'black'
+            : data.color,
         cursor: isDisabled ? 'not-allowed' : 'pointer',
         ':active': {
           ...styles[':active'],
@@ -507,40 +509,62 @@ export default function AddPatient() {
           <FormContainer>
             <div>
               <InfoContainer>
-                <InputContainer>
-                  <p>Nome</p>
-                  <input
-                    onChange={changeInput}
-                    value={patientData.firstName}
-                    name="firstName"
-                  />
-                </InputContainer>
-                <InputContainer>
-                  <p>Sobrenome</p>
-                  <input
-                    onChange={changeInput}
-                    value={patientData.lastName}
-                    name="lastName"
-                  />
-                </InputContainer>
-                <InputContainer>
-                  <p>Email</p>
-                  <input
-                    onChange={changeInput}
-                    value={patientData.email}
-                    name="email"
-                  />
-                </InputContainer>
-                <InputContainer>
-                  <p>Telefone</p>
-                  <input
-                    onChange={changeInput}
-                    value={patientData.phoneNumber}
-                    name="phoneNumber"
-                    type="tel"
-                    placeholder="(21) 98761-4749"
-                  />
-                </InputContainer>
+                <InputGroup>
+                  <InputContainer>
+                    <p>Nome</p>
+                    <input
+                      onChange={changeInput}
+                      value={patientData.firstName}
+                      name="firstName"
+                    />
+                  </InputContainer>
+                  <InputContainer>
+                    <p>Sobrenome</p>
+                    <input
+                      onChange={changeInput}
+                      value={patientData.lastName}
+                      name="lastName"
+                    />
+                  </InputContainer>
+                </InputGroup>
+                <InputGroup>
+                  <InputContainer>
+                    <p>Email</p>
+                    <input
+                      onChange={changeInput}
+                      value={patientData.email}
+                      name="email"
+                    />
+                  </InputContainer>
+                  <InputContainer>
+                    <p>Telefone</p>
+                    <input
+                      onChange={changeInput}
+                      value={patientData.phoneNumber}
+                      name="phoneNumber"
+                      type="tel"
+                      placeholder="(21) 98761-4749"
+                    />
+                  </InputContainer>
+                </InputGroup>
+                <div>
+                  <InputContainer>
+                    <p>Projeto</p>
+                    <select
+                      name="project"
+                      value={patientData.project}
+                      defaultValue=""
+                      onChange={changeInput}
+                    >
+                      <option value="" disabled hidden></option>
+                      <option value="LapARC">LapARC</option>
+                      <option value="CuidArt">CuidArt</option>
+                      <option value="LapARC/CuidArt">LapARC/CuidArt</option>
+                    </select>
+                  </InputContainer>
+                </div>
+                <div></div>
+                
                 <div>
                   <FormsContainer>
                     <h2>Formulário</h2>

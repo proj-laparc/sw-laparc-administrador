@@ -181,7 +181,7 @@ export default function ViewPatients() {
             <section>
               <div>
                 <Label>Nome</Label>
-                <Label email style={{ marginLeft: '26%' }}>Email</Label>
+                <Label email style={{ marginLeft: '26%' }}>Email</Label>  
               </div>
               {patients.map(patient => (
                 <PatientCard

@@ -31,6 +31,7 @@ import {
   TitleContainer,
   ButtonsContainer,
   StyledSelect,
+  InputGroup,
   CancelButton,
 } from './styles';
 import { icons, animations } from '../../../../assets';
@@ -50,6 +51,7 @@ export default function EditPatient({
     firstName: initialPatientData.nome,
     lastName: initialPatientData.sobrenome,
     email: initialPatientData.email,
+    project: initialPatientData.projeto,
     phoneNumber: initialPatientData.telefone,
   });
   const [laudos, setLaudos] = useState(initialPatientData.laudos);
@@ -101,12 +103,12 @@ export default function EditPatient({
     initialPatientData.consultas.length !== 0
       ? invertDate(initialPatientData.consultas)
       : [
-          {
-            descricao: '',
-            data: '',
-            horario: '',
-          },
-        ],
+        {
+          descricao: '',
+          data: '',
+          horario: '',
+        },
+      ],
   );
   const [consultaIndex, setConsultaIndex] = useState(0);
 
@@ -251,14 +253,14 @@ export default function EditPatient({
       const fileData =
         type === 'laudo'
           ? {
-              file_name: firstResponse.data.file_name,
-              descricao: file.descricao,
-              type: 'laudo',
-            }
+            file_name: firstResponse.data.file_name,
+            descricao: file.descricao,
+            type: 'laudo',
+          }
           : {
-              file_name: firstResponse.data.file_name,
-              descricao: 'form',
-            };
+            file_name: firstResponse.data.file_name,
+            descricao: 'form',
+          };
       /*para transformar o arquivo "file" do input em um arquivo
       binário (formato configurado no backend) é preciso fazer um 
       parse no arquivo, isto é, transformar em um Blob que contém
@@ -353,6 +355,7 @@ export default function EditPatient({
         sobrenome: patientData.lastName ? patientData.lastName : null,
         email: patientData.email ? patientData.email : null,
         telefone: patientData.phoneNumber ? patientData.phoneNumber : null,
+        projeto: patientData.project ?? null,
         laudos: laudos.length === 0 ? [] : formatLaudos(laudos),
         formulario:
           form.length === 0 || Object.keys(form[0]).length === 0
@@ -467,9 +470,9 @@ export default function EditPatient({
         results.forEach(file =>
           file?.type === 'laudo'
             ? laudosToUpload.push({
-                file_name: file.file_name,
-                descricao: file.descricao,
-              })
+              file_name: file.file_name,
+              descricao: file.descricao,
+            })
             : form.push(file),
         );
         sendPatientData(
@@ -564,15 +567,7 @@ export default function EditPatient({
     functions: [null, deletePatient],
   };
 
-  function renderAppointment() {
-    if (appointment === 0) {
-      return firstAppointment;
-    } else if (appointment === 1) {
-      return secondAppointment;
-    } else {
-      return thirdAppointment;
-    }
-  }
+
 
   const categoriesOptions = [
     {
@@ -632,17 +627,17 @@ export default function EditPatient({
         backgroundColor: isDisabled
           ? null
           : isSelected
-          ? data.color
-          : isFocused
-          ? color.alpha(0.1).css()
-          : null,
+            ? data.color
+            : isFocused
+              ? color.alpha(0.1).css()
+              : null,
         color: isDisabled
           ? '#ccc'
           : isSelected
-          ? chroma.contrast(color, 'white') > 2
-            ? 'white'
-            : 'black'
-          : data.color,
+            ? chroma.contrast(color, 'white') > 2
+              ? 'white'
+              : 'black'
+            : data.color,
         cursor: isDisabled ? 'not-allowed' : 'pointer',
         ':active': {
           ...styles[':active'],
@@ -703,40 +698,58 @@ export default function EditPatient({
           <FormContainer>
             <div>
               <InfoContainer>
+                <InputGroup>
+                  <InputContainer>
+                    <p>Nome</p>
+                    <input
+                      onChange={changeInput}
+                      value={patientData.firstName}
+                      name="firstName"
+                    />
+                  </InputContainer>
+                  <InputContainer>
+                    <p>Sobrenome</p>
+                    <input
+                      onChange={changeInput}
+                      value={patientData.lastName}
+                      name="lastName"
+                    />
+                  </InputContainer>
+                </InputGroup>
+                <InputGroup>
+                  <InputContainer>
+                    <p>Email</p>
+                    <input
+                      onChange={changeInput}
+                      value={patientData.email}
+                      name="email"
+                    />
+                  </InputContainer>
+                  <InputContainer>
+                    <p>Telefone</p>
+                    <input
+                      onChange={changeInput}
+                      value={patientData.phoneNumber}
+                      name="phoneNumber"
+                      type="tel"
+                      placeholder="(21) 98761-4749"
+                    />
+                  </InputContainer>
+                </InputGroup>
                 <InputContainer>
-                  <p>Nome</p>
-                  <input
+                  <p>Projeto</p>
+                  <select
                     onChange={changeInput}
-                    value={patientData.firstName}
-                    name="firstName"
-                  />
+                    name="project"
+                    value={patientData.project}
+                    defaultValue=""
+                  >
+                    <option value="LapARC">LapARC</option>
+                    <option value="CuidArt">CuidArt</option>
+                    <option value="LapARC/CuidArt">LapARC/CuidArt</option>
+                  </select>
                 </InputContainer>
-                <InputContainer>
-                  <p>Sobrenome</p>
-                  <input
-                    onChange={changeInput}
-                    value={patientData.lastName}
-                    name="lastName"
-                  />
-                </InputContainer>
-                <InputContainer>
-                  <p>Email</p>
-                  <input
-                    onChange={changeInput}
-                    value={patientData.email}
-                    name="email"
-                  />
-                </InputContainer>
-                <InputContainer>
-                  <p>Telefone</p>
-                  <input
-                    onChange={changeInput}
-                    value={patientData.phoneNumber}
-                    name="phoneNumber"
-                    type="tel"
-                    placeholder="(21) 98761-4749"
-                  />
-                </InputContainer>
+                <div></div>
                 <div>
                   <FormsContainer>
                     <h2>Formulário</h2>
@@ -760,7 +773,7 @@ export default function EditPatient({
                         <button type="button" onClick={() => setForm({})}>
                           <AiOutlineCloseCircle size={15} />
                         </button>
-                        <a href={form.preview} target="_blank">
+                        <a href={form.preview} target="_blank" rel="noopener noreferrer">
                           <img src={icons.pdf} />
                         </a>
                       </UploadedFile>
@@ -786,7 +799,7 @@ export default function EditPatient({
                         {!isEmpty(index) ? (
                           <>
                             <UploadedFile>
-                              <a href={laudo.preview} target="_blank">
+                              <a href={laudo.preview} target="_blank" rel="noopener noreferrer">
                                 <img src={icons.pdf} />
                               </a>
                               <button

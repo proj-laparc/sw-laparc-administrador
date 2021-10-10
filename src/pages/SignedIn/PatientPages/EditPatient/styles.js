@@ -121,6 +121,12 @@ export const InfoContainer = styled.div`
   }
 `;
 
+export const InputGroup = styled.div`
+  div+div{
+    margin-top: 20px;
+  }
+`
+
 export const InputContainer = styled.div`
   width: 22vw;
   @media(max-width: 800px){
@@ -135,7 +141,7 @@ export const InputContainer = styled.div`
     line-height: 16px;
   }
 
-  input {
+  input, select {
     border-color: #818e9b90;
     border-width: 0px 0px 1.4px 0px;
     font-weight: 500;

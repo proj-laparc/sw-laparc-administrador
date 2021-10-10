@@ -54,25 +54,7 @@ export default function AudioPlayer({ data, route }) {
           />
         </div>
       </ContentContainer>
-      {/*<ButtonsContainer>
-        <Link
-          to={{
-            pathname: route,
-            state: {
-              data,
-            },
-          }}
-        >
-          <IconButton>{icons.edit}</IconButton>
-        </Link>
-        <a
-          href={`https://storage-laparc.nyc3.digitaloceanspaces.com/laparc/${data.file_name}`}
-          target="_blank"
-          style={{ display: 'inline-block' }}
-        >
-          <ViewButton>Visualizar</ViewButton>
-        </a>
-        </ButtonsContainer>*/}
+  
     </Container>
   );
 }

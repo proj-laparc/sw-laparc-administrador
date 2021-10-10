@@ -108,6 +108,12 @@ export const TitleContainer = styled.div`
   }
 `;
 
+export const InfoGroup = styled.div`
+  div + div{
+    margin-top: 20px;
+  }
+`
+
 export const AddPatientDashboard = styled.div`
   width: 59vw;
   background-color: #fff;
