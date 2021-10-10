@@ -144,6 +144,7 @@ export const InputContainer = styled.div`
   input, select {
     border-color: #818e9b90;
     border-width: 0px 0px 1.4px 0px;
+    background-color: #fff;
     font-weight: 500;
     font-size: 12px;
     line-height: 22px;

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 export const Container = styled.ul`
   height: 64px;
@@ -7,17 +6,17 @@ export const Container = styled.ul`
   width: 100%;
   display: flex;
   align-items: center;
-  @media(max-width: 800px){
-    justify-content: space-between;
-  }
+  justify-content: flext-start;
 `;
 
 export const Name = styled.h1`
   font-weight: 500;
   font-size: 15px;
   line-height: 22px;
-  margin-left: 6.8%;
-  width: 26%;
+  width: calc(100%/12*4);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   @media(max-width: 800px){
     width: 80%;
   }
@@ -27,19 +26,37 @@ export const Email = styled.h1`
   font-weight: 500;
   font-size: 13px;
   line-height: 19px;
-  margin-left: 3.17%;
+  margin-left: 10px;
   color: #707683;
-  width: 40%;
+  width: calc(100%/12*5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   @media(max-width: 800px){
     display: none;
   }
 `;
 
+export const Project = styled.h1`
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 19px;
+  margin-left: 10px;
+  color: #707683;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @media(max-width: 1000px){
+    display: none;
+  }
+`;
+
+
+
 export const ViewButton = styled.button`
-  margin-left: 12%;
   height: 70%;
-  width: 7%;
   transition: filter 0.2s;
+  margin-left: 20px;
   text-decoration: none;
   @media(max-width: 800px){
     width: 20%;
@@ -58,3 +75,8 @@ export const ViewButton = styled.button`
     cursor: pointer;
   }
 `;
+export const Group = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: calc(100%/12*3);
+`

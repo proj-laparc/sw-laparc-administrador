@@ -165,13 +165,14 @@ export const PatientDashboard = styled.div`
   section {
     background-color: #fff;
     height: 100%;
+    padding: 0 20px;
     width: 87%;
     @media(max-width:1000px){
       width: 95%;
     }
   }
 
-  div {
+  >div {
     height: ${props => (props.loading || props.notFound ? '500px' : '6.7vh')};
     width: 100%;
     display: flex;
@@ -179,13 +180,27 @@ export const PatientDashboard = styled.div`
     border-bottom: 1.7px solid #ebeff290;
   }
 `;
+export const LabelsContainer = styled.div`
+    width: 100%;
+    display: grid !important;
+    align-items: center;
+    border-bottom: 1.7px solid #ebeff290;
+    height: 6.7vh;
+    grid-template-columns: 4fr 5fr 3fr;
+    label + label{
+      margin-left: 10px;
+    }
+`
+
 
 export const Label = styled.label`
-  margin-left: 6.8%;
   color: #334d6e;
   font-weight: 500;
   line-height: 19px;
   font-size: 13px;
+  @media(max-width: 1000px){
+    display: ${props => props.project && "none"};
+  }
   @media(max-width: 800px){
     display: ${props => props.email && "none"};
   }

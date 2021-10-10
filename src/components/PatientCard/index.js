@@ -1,32 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { Container, Name, Email, ViewButton } from './styles';
+import { Container, Name, Email, Project,ViewButton, Group } from './styles';
 
-export default function PatientCard({ name, email, data }) {
+export default function PatientCard({ name, email,project, data }) {
   return (
     <Container>
-      <Name>{name?.length > 30 ? `${name.slice(0, 30)}...` : name}</Name>
+      <Name>{name}</Name>
       <Email>
-        {email
-          ? email?.length > 62
-            ? `${email.slice(0, 62)}...`
-            : email
-          : 'Paciente ainda não tem um email cadastrado'}
+        {email ?? 'Paciente ainda não tem um email cadastrado'}
       </Email>
-      <ViewButton>
-        <Link
-          to={{
-            pathname: "/ver-paciente",
-            state: {
-              data,
-            },
-          }}
-          style={{ textDecoration: 'none' }}
-        >
-          <h1>Visualizar</h1>
-        </Link>
-      </ViewButton>
+      <Group>
+        <Project>
+          {project}
+        </Project>
+        <ViewButton>
+          <Link
+            to={{
+              pathname: "/ver-paciente",
+              state: {
+                data,
+              },
+            }}
+            style={{ textDecoration: 'none' }}
+          >
+            <h1>Visualizar</h1>
+          </Link>
+        </ViewButton>
+      </Group>
     </Container>
   );
 }

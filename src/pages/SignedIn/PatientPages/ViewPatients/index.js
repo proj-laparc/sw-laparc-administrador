@@ -24,6 +24,7 @@ import {
   PatientDashboard,
   Subtitle,
   LoadingContainer,
+  LabelsContainer,
   LoadMoreContainer,
   Label
 } from './styles';
@@ -179,15 +180,17 @@ export default function ViewPatients() {
             </LoadingContainer>
           ) : (
             <section>
-              <div>
+              <LabelsContainer>
                 <Label>Nome</Label>
-                <Label email style={{ marginLeft: '26%' }}>Email</Label>  
-              </div>
+                  <Label email>Email</Label>
+                  <Label project>Projeto</Label>
+              </LabelsContainer>
               {patients.map(patient => (
                 <PatientCard
                   key={patient.id.toString()}
                   name={`${patient.nome} ${patient.sobrenome}`}
                   email={patient.email}
+                  project={patient.projeto}
                   data={patient}
                 />
               ))}
