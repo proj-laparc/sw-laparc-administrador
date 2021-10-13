@@ -12,7 +12,9 @@ export function AuthProvider({ children }) {
 
   const [token, setToken] = useState(() => {
     const token = localStorage.getItem('@Laparc:token');
+    console.log("hshsh")
     if (token) {
+      console.log("hshs")
       return token;
     }
     return '';
@@ -74,6 +76,8 @@ export function AuthProvider({ children }) {
 
   const signOut = useCallback(() => {
     localStorage.removeItem('@Laparc:token');
+    localStorage.removeItem('@Laparc:user');
+    localStorage.removeItem('@Laparc:refreshToken');
     setToken('');
     history.push('/');
   }, []);

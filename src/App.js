@@ -9,16 +9,7 @@ import Routes from './routes';
 import AppProvider from './context';
 import GlobalStyle from './styles/global';
 import theme from './styles/theme';
-import PdfViewer from './components/PdfViewer';
 
-/* <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <AppProvider>
-          <Routes />
-        </AppProvider>
-        <GlobalStyle />
-      </BrowserRouter>
-    </ThemeProvider>*/
 
 function App() {
   return (

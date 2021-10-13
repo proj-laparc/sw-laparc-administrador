@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { GiHamburgerMenu } from "react-icons/gi"
-import HamburgerMenu from "react-hamburger-menu"
 import {BiPlus} from "react-icons/bi"
 import { FiSearch } from 'react-icons/fi';
 import { Link } from 'react-router-dom';

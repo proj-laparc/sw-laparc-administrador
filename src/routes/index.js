@@ -1,6 +1,10 @@
 import React from 'react';
 import { Switch, Route as ReactDOMRoute } from 'react-router-dom';
 
+import axios from "axios";
+import api from "../services/api"
+import {useAuth} from "../context/AuthContext"
+import { useToast } from '../context/ToastContext';
 import Route from './Route';
 
 import Login from '../pages/SignedOut/Login';
@@ -30,6 +34,41 @@ import AboutUs from '../pages/SignedIn/AboutUsPages/AboutUs';
 import Configuration from '../pages/SignedIn/ConfigurationPages/Configuration';
 
 export default function Routes() {
+  const { signOut } = useAuth()
+  const { addToast } = useToast();
+  api.interceptors.response.use(
+    response => {
+      return response;
+    },
+    async err => {
+      const originalReq = err.config;
+      if (err.response.status === 401 && err.config && !err.config._retry) {
+        const refreshToken = localStorage.getItem('@Laparc:refreshToken');
+        try {
+          const apiRefresh = axios.create({
+            baseURL: 'https://api.laparc.com.br/',
+          });
+          const response = await apiRefresh.get('/refresh-token', {
+            headers: { Authorization: `Bearer ${refreshToken}` },
+          });
+          localStorage.setItem('@Laparc:token', response.data.token);
+          localStorage.setItem('@Laparc:refreshToken', response.data.refresh_token);
+          originalReq.headers['Authorization'] = `Bearer ${response.data.token}`;
+        } catch (error) {
+          console.log(error, 'error');
+          addToast({
+            type: 'error',
+            title: 'Sessão expirada',
+          });
+          signOut()
+          
+        }
+        return axios(originalReq);
+      } else {
+        throw err;
+      }
+    }
+  );
   return (
     <Switch>
       <Route exact path="/" component={Login} />
