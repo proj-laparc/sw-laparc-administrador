@@ -883,6 +883,7 @@ export default function EditPatient({
                             : '#323c4770',
                         }}
                         name="data"
+                        max="9999-12-31"
                         type="date"
                         value={renderConsulta().data}
                       />

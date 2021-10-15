@@ -700,6 +700,7 @@ export default function AddPatient() {
                         }}
                         name="data"
                         type="date"
+                        max="9999-12-31"
                         value={renderConsulta().data}
                       />
                     </InputContainer>
