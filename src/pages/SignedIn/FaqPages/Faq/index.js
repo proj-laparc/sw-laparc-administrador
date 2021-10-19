@@ -98,7 +98,7 @@ export default function FaqDashboard() {
         >
           <Link style={{ textDecoration: 'none' }} to="/adicionar-pergunta">
             <AddQuestionButton>
-              <h1>Adicionar Perguta</h1>
+              <h1>Adicionar Pergunta</h1>
             </AddQuestionButton>
             <AddQuestionPlusButton>
               <BiPlus/>

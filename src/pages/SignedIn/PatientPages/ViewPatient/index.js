@@ -222,7 +222,7 @@ export default function ViewPatient() {
                           ))
                       ) : (
                         <h3 style={{ marginTop: 10 }}>
-                          Nenhum consulta marcada...
+                          Nenhuma consulta marcada...
                         </h3>
                       )}
                     </Appointments>
