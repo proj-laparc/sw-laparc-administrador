@@ -95,7 +95,7 @@ export default function EditAboutUs({
       let binaryFile = new File([blob], firstResponse.data.file_name, {
         type: filePart.type,
       });
-      const secondResponse = await axios.put(
+      await axios.put(
         firstResponse.data.url,
         binaryFile,
         {
@@ -106,29 +106,34 @@ export default function EditAboutUs({
           },
         },
       );
-      return { file_name: firstResponse.data.file_name };
+      return { file_name: firstResponse.data.file_name, position: file.position };
     } catch (err) {}
   }
 
   function definePicturesToUpload() {
-    let validPictures = [firstPicture, secondPicture].filter(picture => picture !== null);
-    let picturesToUpload = validPictures.filter(picture => picture.image_url === undefined);
-    let picturesToNotUpload = validPictures.filter(picture => picture.image_url !== undefined);
-    return [picturesToUpload, picturesToNotUpload, validPictures];
+    let validPictures = [firstPicture, secondPicture]
+    let picturesToUpload = validPictures.map((picture, index) => {
+      if (picture !== null && picture.image_url === undefined)
+        return { position: index, ...picture }
+    }).filter(picture => picture !==undefined)
+
+    return [picturesToUpload, validPictures];
   }
 
+
   function formatPictures(uploadedPictures, validPictures) {
+  
     let newPictures = validPictures;
-    let newUploadedPictures = uploadedPictures;
-    newPictures.forEach((picture, index) => {
-      if (!picture.image_url) {
-        newPictures[index] = newUploadedPictures.shift();
-      } else {
-        newPictures[index] = { 
-          file_name: picture.file_name 
-        };
+    uploadedPictures.map((picture) => {
+      newPictures[picture.position] = picture
+    })
+    newPictures = newPictures.map((picture) => {
+      if (picture !== null) {
+        const { file_name } = picture;
+        return { file_name }
       }
-    });
+    }).filter(picture => picture !== undefined)
+
     return newPictures;
   }
 
@@ -165,18 +170,14 @@ export default function EditAboutUs({
   function handleSubmit() {
     setLoading(true);
     let pictures = definePicturesToUpload();
-    if (pictures[0].length === 0) {
-      const newPictures = [];
-      sendAboutUs(newPictures, pictures[2]);
-    }
-    else {
-      Promise.all(pictures[0].map(picture => uploadToStorage(picture))).then(
+
+    Promise.all(pictures[0].map(picture => uploadToStorage(picture))).then(
       uploadedPictures => {
-        const newPictures = formatPictures(uploadedPictures, pictures[2]);
-        sendAboutUs(newPictures, pictures[2]);
+        const newPictures = formatPictures(uploadedPictures, pictures[1]);
+        sendAboutUs(newPictures);
       });
-    }
   }
+
 
   function validateInputs() {
     if (!Object.keys(descriptions).every(key => descriptions[key] !== "")) {

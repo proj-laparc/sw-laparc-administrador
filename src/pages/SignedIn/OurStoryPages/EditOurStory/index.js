@@ -138,31 +138,15 @@ export default function EditOurStory({
 
   function definePicturesToUpload() {
     let validPictures = [firstPicture, secondPicture, thirdPicture, fourthPicture]
-    //let picturesToUpload = validPictures.filter(picture => picture.image_url === undefined);
-    //let picturesToNotUpload = validPictures.filter(picture => picture.image_url !== undefined);
     let picturesToUpload = validPictures.map((picture, index) => {
       if (picture !== null && picture.image_url === undefined)
         return { position: index, ...picture }
-    }).filter(picture => picture !==undefined)
+    }).filter(picture => picture !== undefined)
 
     return [picturesToUpload, validPictures];
   }
 
   function formatPictures(uploadedPictures, validPictures) {
-    //Inserts uploaded pictures into valid pictures and formats
-    /*
-    let newPictures = validPictures;
-    let newUploadedPictures = uploadedPictures;
-    newPictures.forEach((picture, index) => {
-      if (!picture.image_url) {
-        newPictures[index] = newUploadedPictures.shift();
-      } else {
-        newPictures[index] = {
-          file_name: picture.file_name
-        };
-      }
-    });
-    */
 
     let newPictures = validPictures;
     uploadedPictures.map((picture) => {
@@ -174,10 +158,6 @@ export default function EditOurStory({
         return { file_name }
       }
     }).filter(picture => picture !== undefined)
-    console.log(newPictures)
-
-
-
 
     return newPictures;
   }
@@ -215,18 +195,12 @@ export default function EditOurStory({
   function handleSubmit() {
     setLoading(true);
     let pictures = definePicturesToUpload();
-    /*if (pictures[0].length === 0) {
-      const newPictures = [];
-      sendOurStory(newPictures, pictures[2]);
-    }*/
-    //else {
+
     Promise.all(pictures[0].map(picture => uploadToStorage(picture))).then(
       uploadedPictures => {
-        //const newPictures = insertsUploadedPicturesAndFormatArray(uploadedPictures, pictures[1])
         const newPictures = formatPictures(uploadedPictures, pictures[1]);
         sendOurStory(newPictures);
       });
-    //}
   }
 
   function validateInputs() {
