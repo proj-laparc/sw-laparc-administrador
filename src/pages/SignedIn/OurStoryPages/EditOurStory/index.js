@@ -121,7 +121,7 @@ export default function EditOurStory({
       let binaryFile = new File([blob], firstResponse.data.file_name, {
         type: filePart.type,
       });
-      const secondResponse = await axios.put(
+      await axios.put(
         firstResponse.data.url,
         binaryFile,
         {
@@ -132,33 +132,57 @@ export default function EditOurStory({
           },
         },
       );
-      return { file_name: firstResponse.data.file_name };
-    } catch (err) {}
+      return { file_name: firstResponse.data.file_name, position: file.position };
+    } catch (err) { }
   }
 
   function definePicturesToUpload() {
-    let validPictures = [firstPicture, secondPicture, thirdPicture, fourthPicture].filter(picture => picture !== null);
-    let picturesToUpload = validPictures.filter(picture => picture.image_url === undefined);
-    let picturesToNotUpload = validPictures.filter(picture => picture.image_url !== undefined);
-    return [picturesToUpload, picturesToNotUpload, validPictures];
+    let validPictures = [firstPicture, secondPicture, thirdPicture, fourthPicture]
+    //let picturesToUpload = validPictures.filter(picture => picture.image_url === undefined);
+    //let picturesToNotUpload = validPictures.filter(picture => picture.image_url !== undefined);
+    let picturesToUpload = validPictures.map((picture, index) => {
+      if (picture !== null && picture.image_url === undefined)
+        return { position: index, ...picture }
+    }).filter(picture => picture !==undefined)
+
+    return [picturesToUpload, validPictures];
   }
 
   function formatPictures(uploadedPictures, validPictures) {
+    //Inserts uploaded pictures into valid pictures and formats
+    /*
     let newPictures = validPictures;
     let newUploadedPictures = uploadedPictures;
     newPictures.forEach((picture, index) => {
       if (!picture.image_url) {
         newPictures[index] = newUploadedPictures.shift();
       } else {
-        newPictures[index] = { 
-          file_name: picture.file_name 
+        newPictures[index] = {
+          file_name: picture.file_name
         };
       }
     });
+    */
+
+    let newPictures = validPictures;
+    uploadedPictures.map((picture) => {
+      newPictures[picture.position] = picture
+    })
+    newPictures = newPictures.map((picture) => {
+      if (picture !== null) {
+        const { file_name } = picture;
+        return { file_name }
+      }
+    }).filter(picture => picture !== undefined)
+    console.log(newPictures)
+
+
+
+
     return newPictures;
   }
 
-  async function sendOurStory(newPictures, validPictures) {
+  async function sendOurStory(newPictures) {
     try {
       let data = {
         portugues: descriptions.portugues,
@@ -191,21 +215,22 @@ export default function EditOurStory({
   function handleSubmit() {
     setLoading(true);
     let pictures = definePicturesToUpload();
-    if (pictures[0].length === 0) {
+    /*if (pictures[0].length === 0) {
       const newPictures = [];
       sendOurStory(newPictures, pictures[2]);
-    }
-    else {
-      Promise.all(pictures[0].map(picture => uploadToStorage(picture))).then(
+    }*/
+    //else {
+    Promise.all(pictures[0].map(picture => uploadToStorage(picture))).then(
       uploadedPictures => {
-        const newPictures = formatPictures(uploadedPictures, pictures[2]);
-        sendOurStory(newPictures, pictures[2]);
+        //const newPictures = insertsUploadedPicturesAndFormatArray(uploadedPictures, pictures[1])
+        const newPictures = formatPictures(uploadedPictures, pictures[1]);
+        sendOurStory(newPictures);
       });
-    }
+    //}
   }
 
   function validateInputs() {
-   if (!Object.keys(descriptions).every(key => descriptions[key] !== "")) {
+    if (!Object.keys(descriptions).every(key => descriptions[key] !== "")) {
       return true;
     } else {
       return false;
@@ -214,14 +239,14 @@ export default function EditOurStory({
 
   return (
     <Background>
-      <SideBar activeOption={'folder'} open={open}/>
-      <Cover open={open}/>
+      <SideBar activeOption={'folder'} open={open} />
+      <Cover open={open} />
       <Container>
         <Header>
-        <HamburgerBtn
+          <HamburgerBtn
             isOpen={open}
-            open={open}  
-            menuClicked={()=>setOpen(!open)}
+            open={open}
+            menuClicked={() => setOpen(!open)}
             width={20}
             height={17}
             strokeWidth={2}
@@ -229,33 +254,33 @@ export default function EditOurStory({
             color='#99a3ae'
             borderRadius={0}
             animationDuration={0.5}
-        />
+          />
           <h1>Nossa História</h1>
         </Header>
         <Dashboard>
-        <LanguagesContainer>
-              <LanguageButton
-                onClick={() => setLanguage('portugues')}
-                enabled={language === 'portugues'}
-              >
-                <img src={icons.brazilian} alt="portugues" />
-              </LanguageButton>
-              <LanguageButton
-                onClick={() => setLanguage('espanhol')}
-                enabled={language === 'espanhol'}
-              >
-                <img src={icons.spanish} alt="espanhol" />
-              </LanguageButton>
-              <LanguageButton
-                onClick={() => setLanguage('ingles')}
-                enabled={language === 'ingles'}
-              >
-                <img src={icons.english} alt="ingles" />
-              </LanguageButton>
-            </LanguagesContainer>
-            
+          <LanguagesContainer>
+            <LanguageButton
+              onClick={() => setLanguage('portugues')}
+              enabled={language === 'portugues'}
+            >
+              <img src={icons.brazilian} alt="portugues" />
+            </LanguageButton>
+            <LanguageButton
+              onClick={() => setLanguage('espanhol')}
+              enabled={language === 'espanhol'}
+            >
+              <img src={icons.spanish} alt="espanhol" />
+            </LanguageButton>
+            <LanguageButton
+              onClick={() => setLanguage('ingles')}
+              enabled={language === 'ingles'}
+            >
+              <img src={icons.english} alt="ingles" />
+            </LanguageButton>
+          </LanguagesContainer>
+
           <TitleContainer>
-            
+
             <Title>História Laparc</Title>
           </TitleContainer>
           <Description
@@ -266,18 +291,19 @@ export default function EditOurStory({
             {[firstPicture, secondPicture, thirdPicture, fourthPicture].map(
               (picture, index) =>
                 picture ? (
-                  <PictureContainer index={index}>
+                  <PictureContainer index={index} key={index}>
                     <button onClick={() => cleanFile(index)} type="button">
                       <AiOutlineCloseCircle size={27} />
                     </button>
                     <Picture
                       src={picture.preview ? picture.preview : picture.image_url}
                     />
-                    
+
                   </PictureContainer>
                 ) : (
                   <Dropzone
                     onDrop={acceptedFiles => handleFile(acceptedFiles, index)}
+                    key={index}
                   >
                     {({ getRootProps, getInputProps, isDragActive }) => (
                       <>
@@ -319,3 +345,4 @@ export default function EditOurStory({
     </Background>
   );
 }
+

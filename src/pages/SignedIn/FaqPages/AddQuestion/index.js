@@ -111,29 +111,7 @@ export default function AddQuestion() {
                 <img src={icons.english} alt="ingles" />
               </LanguageButton>
           </LanguagesContainer>
-          {/*<Header>
-            <AddQuestionTitle>Adicionar Pergunta</AddQuestionTitle>
-            <LanguagesContainer>
-              <LanguageButton
-                onClick={() => setLanguage('pt')}
-                enabled={language === 'pt'}
-              >
-                <img src={icons.brazilian} alt="portugues" />
-              </LanguageButton>
-              <LanguageButton
-                onClick={() => setLanguage('es')}
-                enabled={language === 'es'}
-              >
-                <img src={icons.spanish} alt="espanhol" />
-              </LanguageButton>
-              <LanguageButton
-                onClick={() => setLanguage('en')}
-                enabled={language === 'en'}
-              >
-                <img src={icons.english} alt="ingles" />
-              </LanguageButton>
-          </LanguagesContainer>
-          </Header>*/}
+         
           
           <InputContainer>
             <p>Pergunta</p>

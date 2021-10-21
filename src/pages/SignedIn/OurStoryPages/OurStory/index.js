@@ -38,6 +38,7 @@ export default function OurStory() {
     try {
       const response = await api.get('/textos/1');
       const { data } = response;
+      console.log(data)
       setData(data);
     } catch (err) {
       addToast({
