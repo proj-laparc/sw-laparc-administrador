@@ -38,7 +38,7 @@ export default function OurStory() {
     try {
       const response = await api.get('/textos/1');
       const { data } = response;
-      console.log(data)
+      console.log(data.portugues)
       setData(data);
     } catch (err) {
       addToast({

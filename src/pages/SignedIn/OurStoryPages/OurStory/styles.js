@@ -109,6 +109,7 @@ export const Title = styled.h1`
 export const Description = styled.div`
   margin-top: 40px;
   padding: 0px 90px;
+  white-space:pre-wrap;
   @media(max-width: 800px){
     padding: 0 30px;
   }
